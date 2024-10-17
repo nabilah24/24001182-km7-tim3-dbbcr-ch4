@@ -1,4 +1,4 @@
 node_modules
 !tmp/Readme.md
 tmp/*
-.env.example
+.env
