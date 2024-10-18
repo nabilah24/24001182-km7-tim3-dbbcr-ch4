@@ -2,4 +2,3 @@ node_modules
 !tmp/Readme.md
 tmp/*
 .env
-.env.example
