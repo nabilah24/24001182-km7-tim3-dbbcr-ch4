@@ -19,7 +19,7 @@ const router = express.Router();
 // It will be run the URL based on path and the method
 router
   .route("/")
-  .get(validateGetTransmission, getTransmissions)
+  .get(validateGetTransmissions, getTransmissions)
   .post(validateCreateTransmission, createTransmission);
 
 router 

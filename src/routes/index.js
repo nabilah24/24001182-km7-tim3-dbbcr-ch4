@@ -1,9 +1,11 @@
 const express = require("express");
-const carsRouter = require("./cars")
+const transmissionsRouter = require("./transmissions")
+const manufacturesRouter = require("./manufactures")
 
 const router = express.Router();
 
-router.use("/cars", carsRouter);
+router.use("/transmissions", transmissionsRouter);
+router.use("/manufactures", manufacturesRouter);
 router.get('/', (req, res) => {
   res.send({
     message: "Ping Succesfully!",

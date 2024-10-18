@@ -1,11 +1,12 @@
-const studentService = require("../services/transmissions");
+const transmissionService = require("../services/transmissions");
 const { successResponse } = require("../utils/response");
 
 exports.getTransmissions = async (req, res, next) => {
     // Call the usecase or service
     const data = await transmissionService.getTransmissions(
         req.query?.name,
-        req.query?.nick_name
+        req.query?.driveType,
+        req.query?.description
     );
     successResponse(res, data);
 };
@@ -25,10 +26,10 @@ exports.createTransmission = async (req, res, next) => {
     successResponse(res, data);
 };
 
-exports.updateStudent = async (req, res, next) => {
+exports.updateTransmission = async (req, res, next) => {
     // Get the id from params
     const { id } = req.params;
-    const data = await transmissionService.updateTransmission(id, req.body, req.files);
+    const data = await transmissionService.updateTransmission(id, req.body);
     successResponse(res, data);
 };
 
