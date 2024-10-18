@@ -12,6 +12,7 @@ model cars {
   plate       String?   @db.VarChar(255)
   modelId     BigInt?
   typeId      BigInt?
+  description String?   @db.VarChar(255)
   availableAt DateTime? @db.Timestamp(6)
   available   Boolean?
   image       String?   @db.VarChar(255)
