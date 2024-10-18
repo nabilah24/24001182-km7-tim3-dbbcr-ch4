@@ -16,7 +16,7 @@ exports.getManufactures = async (name, country) => {
     }
     if (country) {
         orQuery.push({
-            driveType: { contains: country, mode: "insensitive" },
+            country: { contains: country, mode: "insensitive" },
         });
     }
     if (orQuery.length > 0) {

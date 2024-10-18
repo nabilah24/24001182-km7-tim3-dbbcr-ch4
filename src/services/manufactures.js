@@ -1,8 +1,8 @@
 const manufactureRepository = require("../repositories/manufactures");
 const { NotFoundError, InternalServerError } = require("../utils/request");
 
-exports.getManufactures = async (name, nickName) => {
-    return manufactureRepository.getManufactures(name, nickName);
+exports.getManufactures = async (name, country) => {
+    return manufactureRepository.getManufactures(name, country);
 };
 
 exports.getManufactureById = async (id) => {
