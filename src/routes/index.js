@@ -5,10 +5,7 @@ const typesRouter = require("./types");
 const router = express.Router();
 
 // router.use("/cars", carsRouter);
-<<<<<<< HEAD
 router.use("/types", typesRouter);
-=======
->>>>>>> main
 router.get('/', (req, res) => {
   res.send({
     message: "Ping Succesfully!",
