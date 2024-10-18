@@ -1,5 +1,4 @@
 const typesRepository = require("../repositories/types");
-const { imageUpload } = require("../utils/image-kit");
 const { NotFoundError, InternalServerError } = require("../utils/request");
 
 exports.getCarTypes = async (name, capacity) => {
