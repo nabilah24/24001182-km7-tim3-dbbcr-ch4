@@ -10,7 +10,6 @@ const getAllCars = async (plate, available, availableAt) => {
   };
 
   let arrQuery = [];
-
   if (plate) {
     arrQuery.push({ 
       plate: { contains: plate, mode: "insensitive" }
@@ -18,14 +17,16 @@ const getAllCars = async (plate, available, availableAt) => {
   };
 
   if (available) {
-    arrQuery.push({ available: available === "true" })
+    arrQuery.push({ 
+      available: { equals: available }
+    })
   };
 
   if (availableAt) {
-    arrQuery.push({
-      availableAt: { gte: new Date(availableAt) }
+    arrQuery.push({ 
+      availableAt: { gte: availableAt } 
     })
-  }
+  };
 
   if (arrQuery.length > 0)  {
     query.where = {

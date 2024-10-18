@@ -6,7 +6,7 @@ const validateGetAllCars = (req, res, next) => {
   const validateQuery = (queries) => {
     const schema = z.object({
       plate: z.string().optional().nullable(),
-      available: z.boolean().optional().nullable(),
+      available: z.string().optional().nullable(),
       availableAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
         message: "Invalid date format"
       }).optional().nullable()
@@ -18,6 +18,14 @@ const validateGetAllCars = (req, res, next) => {
   const validateQueryResult = validateQuery(req.query);
   if (!validateQueryResult.success) {
     throw new BadRequestError(validateQueryResult.error.errors);
+  };
+
+  if (validateQueryResult.data.available) {
+    req.query.available = validateQueryResult.data.available == "true" ? true : false;
+  };
+
+  if (validateQueryResult.data.availableAt) {
+    req.query.availableAt = new Date(validateQueryResult.data.availableAt)
   };
 
   next();
@@ -61,9 +69,17 @@ const validateAddCar = (req, res, next) => {
     return schema.safeParse(car);
   };
 
-  // Parsing data query
+  // Parsing data
   if (req.body.available) {
     req.body.available = req.body.available == "true" ? true : false;
+  };
+
+  if (req.body.options) {
+    req.body.options = Array.isArray(req.body.options) ? req.body.options : [req.body.options];
+  };
+
+  if (req.body.specs) {
+    req.body.specs = Array.isArray(req.body.specs) ? req.body.specs : [req.body.specs];
   };
 
   // Validasi data file
@@ -73,8 +89,8 @@ const validateAddCar = (req, res, next) => {
       image: z.object({
         name: z.string(),
         data: z.any()
-      }).optional().nullable()
-    }).optional().nullable();
+      }).optional()
+    }).optional();
 
     return schema.safeParse(file);
   }
@@ -112,7 +128,7 @@ const validateUpdateCar = (req, res, next) => {
   };
 
   // Validasi req.body
-  const validateBody = (car) => {
+  const validateCar = (car) => {
     const schema = z.object({
       plate: z.string(),
       modelId: z.string(),
@@ -128,28 +144,42 @@ const validateUpdateCar = (req, res, next) => {
     return schema.safeParse(car);
   };
 
-  // Validasi req.files
+  // Parsing data
+  if (req.body.available) {
+    req.body.available = req.body.available == "true" ? true : false;
+  };
+
+  if (req.body.options) {
+    req.body.options = Array.isArray(req.body.options) ? req.body.options : [req.body.options];
+  };
+
+  if (req.body.specs) {
+    req.body.specs = Array.isArray(req.body.specs) ? req.body.specs : [req.body.specs];
+  };
+
+  // Validasi data file
   // Upload file tidak diwajibkan
   const validateFileBody = (file) => {
     const schema = z.object({
       image: z.object({
         name: z.string(),
         data: z.any()
-      }).optional().nullable()
-    }).optional().nullable();
+      }).optional()
+    }).optional();
 
     return schema.safeParse(file);
   }
 
   // Dapatkan hasil validasi req.body
-  const validateBodyResult = validateBody(req.body);
-  if (!validateBodyResult.success) {
-    throw new BadRequestError(validateBodyResult.error.errors);
+  const validateCarResult = validateCar(req.body);
+  if (!validateCarResult.success) {
+    throw new BadRequestError(validateCarResult.error.errors);
   };
 
   // Dapatkan hasil validasi req.files
   const resultValidateFiles = validateFileBody(req.files);
   if (!resultValidateFiles.success) {
+    // If validation fails, return error messages
     throw new BadRequestError(resultValidateFiles.error.errors);
   };
 
