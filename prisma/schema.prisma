@@ -6,3 +6,52 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model cars {
+  id          BigInt    @id @default(autoincrement())
+  plate       String?   @db.VarChar(255)
+  modelId     BigInt?
+  typeId      BigInt?
+  availableAt DateTime? @db.Timestamp(6)
+  available   Boolean?
+  image       String?   @db.VarChar(255)
+  options     Json?     @db.Json
+  specs       Json?     @db.Json
+  models      models?   @relation(fields: [modelId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  types       types?    @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model models {
+  id             BigInt         @id @default(autoincrement())
+  name           String?        @db.VarChar(255)
+  manufactureId  BigInt?
+  transmissionId BigInt?
+  year           Int?
+  rentPerDay     Int?
+  cars           cars[]
+  manufactures   manufactures?  @relation(fields: [manufactureId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transmissions  transmissions? @relation(fields: [transmissionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model manufactures {
+  id      BigInt   @id @default(autoincrement())
+  name    String?  @db.VarChar(255)
+  country String?  @db.VarChar(255)
+  models  models[]
+}
+
+model transmissions {
+  id          BigInt   @id @default(autoincrement())
+  name        String?  @db.VarChar(255)
+  driveType   String?  @db.VarChar(255)
+  description String?  @db.VarChar(255)
+  models      models[]
+}
+
+model types {
+  id          BigInt  @id @default(autoincrement())
+  name        String? @db.VarChar(255)
+  description String? @db.VarChar(255)
+  capacity    Int?
+  cars        cars[]
+}

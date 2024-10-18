@@ -1,31 +1,26 @@
 const express = require("express");
 const {
-  validateGetCars,
+  validateGetAllCars,
   validateGetCarById,
-  validateDeleteCarById,
-  validateCreateCar,
+  validateAddCar,
   validateUpdateCar,
+  validateDeleteCarById
 } = require("../middlewares/cars");
+
 const {
-  getCars,
+  getAllCars,
   getCarById,
-  deleteCarById,
-  createCar,
+  addNewCar,
   updateCar,
+  deleteCarById
 } = require("../controllers/cars");
 
 const router = express.Router();
 
-// It will be run the URL based on path and the method
-router
-  .route("/")
-  .get(validateGetCars, getCars)
-  .post(validateCreateCar, createCar);
-
-router 
-  .route("/:id")
-  .get(validateGetCarById, getCarById)
-  .put(validateUpdateCar, updateCar)
-  .delete(validateDeleteCarById, deleteCarById);
+router.get("/", validateGetAllCars, getAllCars);
+router.get("/:id", validateGetCarById, getCarById);
+router.post("/", validateAddCar, addNewCar);
+router.put("/:id", validateUpdateCar, updateCar);
+router.delete("/:id", validateDeleteCarById, deleteCarById);
 
 module.exports = router;
