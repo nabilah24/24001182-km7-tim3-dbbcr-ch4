@@ -1,9 +1,9 @@
 const express = require("express");
 const {
-  validateGetCars,
+  validateGetAllCars,
   validateGetCarById,
   validateDeleteCarById,
-  validateCreateCar,
+  validateAddCar,
   validateUpdateCar,
 } = require("../middlewares/cars");
 const {
