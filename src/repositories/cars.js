@@ -22,12 +22,6 @@ const getAllCars = async (plate, available, availableAt) => {
     })
   };
 
-  if (availableAt) {
-    arrQuery.push({ 
-      availableAt: { gte: availableAt } 
-    })
-  };
-
   if (arrQuery.length > 0)  {
     query.where = {
       ...query.where,

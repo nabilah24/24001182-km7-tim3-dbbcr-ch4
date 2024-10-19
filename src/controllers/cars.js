@@ -7,7 +7,6 @@ const getAllCars = async (req, res, next) => {
   const data = await carService.getAllCars(
     req.query?.plate,
     req.query?.available,
-    req.query?.availableAt
   );
 
   successResponse(res, "Successfully Get All Cars Data", data);

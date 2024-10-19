@@ -12,12 +12,12 @@ model cars {
   plate       String?   @db.VarChar(255)
   modelId     BigInt?
   typeId      BigInt?
+  description String?   @db.VarChar(255)
   availableAt DateTime? @db.Timestamp(6)
   available   Boolean?
   image       String?   @db.VarChar(255)
   options     Json?     @db.Json
   specs       Json?     @db.Json
-  description String?   @db.VarChar(225)
   models      models?   @relation(fields: [modelId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   types       types?    @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

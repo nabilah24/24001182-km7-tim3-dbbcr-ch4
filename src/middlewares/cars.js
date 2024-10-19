@@ -8,9 +8,6 @@ const validateGetAllCars = (req, res, next) => {
     const schema = z.object({
       plate: z.string().optional().nullable(),
       available: z.string().optional().nullable(),
-      availableAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
-        message: "Invalid date format"
-      }).optional().nullable()
     });
 
     return schema.safeParse(queries);
@@ -23,10 +20,6 @@ const validateGetAllCars = (req, res, next) => {
 
   if (validateQueryResult.data.available) {
     req.query.available = validateQueryResult.data.available == "true" ? true : false;
-  };
-
-  if (validateQueryResult.data.availableAt) {
-    req.query.availableAt = new Date(validateQueryResult.data.availableAt)
   };
 
   next();
@@ -59,6 +52,7 @@ const validateAddCar = (req, res, next) => {
       plate: z.string(),
       modelId: z.string(),
       typeId: z.string(),
+      description: z.string(),
       availableAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
         message: "Invalid date format"
       }),
@@ -134,6 +128,7 @@ const validateUpdateCar = (req, res, next) => {
       plate: z.string(),
       modelId: z.string(),
       typeId: z.string(),
+      description: z.string(),
       availableAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
         message: "Invalid date format"
       }),
