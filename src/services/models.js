@@ -6,7 +6,7 @@ const getAllModels = async (name, year, rentPerDay) => {
 };
 
 const getModelById = async (id) => {
-  const existingModel = modelRepository.getModelById(id);
+  const existingModel = await modelRepository.getModelById(id);
   if (!existingModel) {
     throw new NotFoundError("Model Data Not Found!");
   };

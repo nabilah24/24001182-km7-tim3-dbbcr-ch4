@@ -40,7 +40,7 @@ exports.getCarTypes = async (name, capacity) => {
 
 exports.getCarTypeById = async (id) => {
   // find car type by id
-  const carType = await prisma.types.findMany({
+  const carType = await prisma.types.findFirst({
     where: {
       id: BigInt(id),
     },
@@ -48,10 +48,6 @@ exports.getCarTypeById = async (id) => {
       cars: true,
     },
   });
-
-  if (!carType) {
-    throw new NotFoundError("Car Type is Not Found!");
-  }
 
   // Convert BigInt fields to string for safe seralization
   const serializedCarTypes = JSONBigInt.stringify(carType);
