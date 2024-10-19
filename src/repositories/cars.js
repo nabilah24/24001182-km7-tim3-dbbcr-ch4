@@ -6,7 +6,10 @@ const prisma = new PrismaClient();
 // Dapatkan semua data cars
 const getAllCars = async (plate, available, availableAt) => {
   let query = {
-    include: { models: true, types: true }
+    include: { 
+      models: true, 
+      types: true,
+    }
   };
 
   let arrQuery = [];
@@ -19,6 +22,12 @@ const getAllCars = async (plate, available, availableAt) => {
   if (available) {
     arrQuery.push({ 
       available: { equals: available }
+    })
+  };
+
+  if (availableAt) {
+    arrQuery.push({ 
+      availableAt: { gte: availableAt } 
     })
   };
 
@@ -51,10 +60,14 @@ const getCarById = async (id) => {
 
 const addNewCar = async (data) => {
   const newCar = await prisma.cars.create({
-    data
+    data,
+    include: {
+      models: true,
+      types: true,
+    },
   });
 
-  // Konversi field BigInt ke string supaya serialization-nya aman
+  // Convert BigInt fields to strings for safe serialization
   const serializedNewCar = JSONBigInt.stringify(newCar);
   return JSONBigInt.parse(serializedNewCar);
 };
