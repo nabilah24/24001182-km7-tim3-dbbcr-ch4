@@ -1,5 +1,6 @@
-const { z } = require("zod");
-const { BadRequestError } = require("../utils/request");
+const { zod } = require('zod');
+const { BadRequestError } = require('../utils/request');
+
 // Validasi untuk mengambil semua data cars
 const validateGetAllCars = (req, res, next) => {
   // Zod validation
@@ -32,22 +33,7 @@ const validateGetAllCars = (req, res, next) => {
 };
 
 // Validasi untuk mengambil data car dari id
-const validateGetCarById = (req, res, next) => {
-  // Zod validation
-  const validateId = (id) => {
-    const schema = z.object({
-      id: z.string()
-    });
-    return schema.safeParse(id)
-  };
-
-  const validateIdResult = validateId(req.params);
-
-  if (!validateIdResult.success) {
-    throw new BadRequestError(validateIdResult.error.errors);
-  };
-
-  next();
+exports.validateGetCarById = (req, res, next) => {
 };
 
 // Validasi untuk menambah data car baru
@@ -187,26 +173,5 @@ const validateUpdateCar = (req, res, next) => {
 };
 
 // Validasi untuk menghapus data car
-const validateDeleteCarById = (req, res, next) => {
-  const validateId = (id) => {
-    const schema = z.object({
-      id: z.string()
-    });
-    return schema.safeParse(id)
-  };
-
-  const validateIdResult = validateId(req.params);
-  if (!validateIdResult.success) {
-    throw new BadRequestError(validateIdResult.error.errors);
-  };
-
-  next();
-};
-
-module.exports = {
-  validateGetAllCars,
-  validateGetCarById,
-  validateAddCar,
-  validateUpdateCar,
-  validateDeleteCarById
+exports.validateDeleteCarById = (req, res, next) => {
 };
