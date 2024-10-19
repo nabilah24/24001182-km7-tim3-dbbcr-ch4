@@ -6,9 +6,9 @@ const validateGetAllModels = (req, res, next) => {
   // Zod validation
   const validateQuery = (queries) => {
     const schema = z.object({
-      name: z.string().optional(),
-      year: z.string().optional(),
-      rentPerDay: z.string().optional()
+      name: z.string().optional().nullable(),
+      year: z.string().optional().nullable(),
+      rentPerDay: z.string().optional().nullable()
     });
 
     return schema.safeParse(queries);
