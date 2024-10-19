@@ -7,10 +7,10 @@ const {
   validateUpdateCar,
 } = require("../middlewares/cars");
 const {
-  getCars,
+  getAllCars,
   getCarById,
   deleteCarById,
-  createCar,
+  addNewCar,
   updateCar,
 } = require("../controllers/cars");
 
@@ -19,8 +19,8 @@ const router = express.Router();
 // It will be run the URL based on path and the method
 router
   .route("/")
-  .get(validateGetCars, getCars)
-  .post(validateCreateCar, createCar);
+  .get(validateGetAllCars, getAllCars)
+  .post(validateAddCar, addNewCar);
 
 router 
   .route("/:id")
